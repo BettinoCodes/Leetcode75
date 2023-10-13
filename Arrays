@@ -1,1 +1,52 @@
+Two Sum
 
+Summary: for the Brute force of this problem, we would most likely have to iterate through the array twice for two values that 
+would add up to the target value,
+
+vector<int> twoSum(vector<int>& nums, int target){
+  for (int i = 0; i < nums.size(); i++){      // iterate through values start to end of the list
+      for (int j = i + 1; j < nums.size(); j++){  // iterate through the rest of the list from ith value
+          if (nums[i] + nums[j] == target){        // check if the numbers from i and j add up to our target value
+              return {nums[i], nums[j]};      // if so return those values
+              }
+          }
+      }
+return {}; // if no values add up to the target value then we want to return an empty list
+}
+
+Optimized Solution with a hashmap
+
+For the optimized version we want to use a hashmap to store the values of previous values of the list while iterating,
+we will reduce our speed by searching for the target difference between our target and the current number through the iteration
+and if that number already exists in our dictionary we want to return that number with its iteration, if not then we want to return
+that value in our dictionary as a key, with a value of the ith position
+
+vector<int> twoSum(vector<int>& nums, int target) {
+    unordered_map<int, int> myMap;
+    int size = nums.size();
+
+    for (int i = 0; i < size; i++ ){
+        int num = nums[i];
+        int numdif = target - num;
+
+        if (myMap.find(numdif) != myMap.end()){
+            return {i, myMap[numdif]};
+        }
+        else{
+            myMap[num] = i;
+        }
+    }
+    return {};
+}  
+
+
+
+Best Time to Buy and Sell Stock
+Contains Duplicate
+Product of Array Except Self
+Maximum Subarray
+Maximum Product Subarray
+Find Minimum in Rotated Sorted Array
+Search in Rotated Sorted Array
+3 Sum
+Container With Most Water
