@@ -39,13 +39,102 @@ vector<int> twoSum(vector<int>& nums, int target) {
     return {};
 }  
 
-
-
 Best Time to Buy and Sell Stock
+int maxProfit(vector<int>& prices) {
+        int maxProfit = 0;
+        int minimum = INT_MAX;
+
+        for (int i = 0; i < prices.size(); i++){
+            if (prices[i] < minimum){
+                minimum = prices[i];
+            }
+
+            if (prices[i] - minimum > maxProfit){
+                maxProfit = prices[i] - minimum;
+            }
+        }
+        return maxProfit;
+    }
+
 Contains Duplicate
+
+bool containsDuplicate(vector<int>& nums) {
+        unordered_map<int, int> myMap;
+
+        for (int i = 0; i < nums.size(); i++) {
+            myMap[nums[i]]++;
+            if (myMap[nums[i]] > 1) {
+                return true; 
+            }
+        }
+        return false; 
+    }
+
 Product of Array Except Self
-Maximum Subarray
+vector<int> productExceptSelf(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> left(n, 1);
+        vector<int> right(n, 1);
+        vector<int> result(n, 1);
+
+        for (int i = 1; i < n; i++){
+            left[i] = left[i-1]*nums[i-1];
+        }
+
+        for (int i = n-2; i >= 0; i--){
+            right[i] = right[i+1] * nums[i+1];
+        }
+
+        for(int i = 0; i < n; i++){
+            result[i] = left[i] * right[i];
+        }
+        return result;
+    }
+
+Optimized:
+vector<int> productExceptSelf(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> myvect(n,1);
+
+        for(int i = 1; i < n; i++){
+            myvect[i] = myvect[i-1]*nums[i-1];
+        }
+
+        int R = 1;
+        for(int i = n - 1; i >= 0; i--){
+            myvect[i] = myvect[i] * R;
+            R = R * nums[i];
+        }
+
+        return myvect;
+    }
+Maximum Sum Subarray
+
+
 Maximum Product Subarray
+
+int maxProduct(vector<int>& nums) {
+       int n = nums.size();
+
+       int  prefix = 1,
+            suffix = 1,
+            solution = INT_MIN;
+
+       for (int i = 0; i < n; i++){
+           if (prefix == 0){
+               prefix = 1;
+           }
+           if (suffix == 0){
+               suffix = 1;
+           }
+
+           prefix *= nums[i];
+           suffix *= nums[n-i-1];
+
+        solution = max(solution, max(prefix, suffix));
+       }
+       return solution;
+    }
 Find Minimum in Rotated Sorted Array
 Search in Rotated Sorted Array
 3 Sum
